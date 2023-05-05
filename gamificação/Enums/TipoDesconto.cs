@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace gamificacao.Enums
 {
-    internal class TipoDesconto
+    public enum TipoDesconto
     {
+        ValorFixo,
+        Porcentagem
     }
 }

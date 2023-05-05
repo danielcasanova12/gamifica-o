@@ -7,68 +7,96 @@ namespace gamificacao.Models
 {
     public class Estoque
     {
-        private List<Produto> _produtos;
+        private List<ProdutoModel> _produtos;
         private List<Promocao> promocoes;
         public Estoque()
         {
-            _produtos = new List<Produto>();
+            _produtos = new List<ProdutoModel>();
             promocoes = new List<Promocao>();
         }
 
-        public void AdicionarPromocao(Promocao promocao)
+        public void AdicionarPromocao(Promocao promocao,int code)
         {
+            
             foreach (var produto in _produtos)
             {
-                if (promocao.Produtos.Contains(produto))
+                if (produto.Categoria == (CategoriaEnum)code)
                 {
-                    produto.Desconto = promocao.ValorDesconto;
+                    // produto.Desconto = promocao.ValorDesconto;
+                    produto.DefinirDesconto(promocao.ValorDesconto);
                 }
             }
         }
 
 
 
-        public void AdicionarProduto(Produto produto)
+        public void RegistrarProduto(ProdutoModel produto)
         {
             _produtos.Add(produto);
         }
 
-        public List<Produto> ListarProdutos(int code)
+        public List<ProdutoModel> ListarProdutos(int code)
         {
-            List<Produto> produtosFiltrados = new List<Produto>();
+            List<ProdutoModel> produtosFiltrados = new List<ProdutoModel>();
             foreach (var produto in _produtos)
             {
-                if (code == produto.Tipo)
+                if (produto.Categoria == (CategoriaEnum)code)
                 {
                     produtosFiltrados.Add(produto);
                 }
+
+
+
             }
             return produtosFiltrados;
         }
 
         public void RemoverProduto(int codigo)
         {
-            var produto = _produtos.FirstOrDefault(p => p.Codigo == codigo);
+            var produto = _produtos.FirstOrDefault(p => p.ProdutoID == codigo);
             if (produto != null)
             {
                 _produtos.Remove(produto);
             }
         }
-        public Produto ObterProdutoPorCodigo(int codigo,int tipo)
+        public ProdutoModel ObterProdutoPorCodigo(int codigo,int tipo)
         {
-            return _produtos.FirstOrDefault(p => p.Codigo == codigo && p.Tipo == tipo);
+            return _produtos.FirstOrDefault(p => p.ProdutoID == codigo );//&& p.Tipo == tipo
         }
 
 
-
-
-        public Produto AdicionarProdutoNoCarrinho(int codigo, int tipo)
+        public void AplicarPromocao( CategoriaEnum categoria)
         {
-            List<Produto> produtosFiltrados = ListarProdutos(tipo);
-            var produto = produtosFiltrados.FirstOrDefault(p => p.Codigo == codigo);
+            var produtosFiltrados = _produtos.Where(p => p.Categoria == categoria);
+            var promocao = promocoes.FirstOrDefault(pr => pr.Produtos().Intersect(produtosFiltrados).Any());
+
+            if (promocao != null)
+            {
+                decimal desconto ;
+                foreach (var produto in produtosFiltrados)
+                {
+                    if (promocao.TipoDesconto == TipoDesconto.Porcentagem)
+                    {
+                        desconto = produto.Preco * (promocao.ValorDesconto / 100);
+                        produto.DefinirDesconto(desconto);
+                    }
+                    else if (promocao.TipoDesconto == TipoDesconto.ValorFixo)
+                    {
+                        desconto = promocao.ValorDesconto;
+                        produto.DefinirDesconto(desconto);
+                    }
+                }
+            }
+        }
+
+
+        public ProdutoModel AdicionarProdutoNoCarrinho(int codigo, int tipo)
+        {
+            List<ProdutoModel> produtosFiltrados = ListarProdutos(tipo);
+            var produto = produtosFiltrados.FirstOrDefault(p => p.ProdutoID == codigo);
             if (produto != null)
             {
-                Promocao promocao = promocoes.FirstOrDefault(pr => pr.Produtos.Contains(produto));
+                Promocao promocao = promocoes.FirstOrDefault(pr => pr.Produtos().Contains(produto));
                 if (promocao != null)
                 {
                     decimal desconto = 0;
@@ -80,11 +108,11 @@ namespace gamificacao.Models
                     {
                         desconto = promocao.ValorDesconto;
                     }
-                    produto.Desconto = desconto;
+                    produto.DefinirDesconto(desconto);
                 }
                 else
                 {
-                    produto.Desconto = 0;
+                    produto.DefinirDesconto(0);
                 }
                 _produtos.Remove(produto);
                 return produto;
@@ -92,15 +120,16 @@ namespace gamificacao.Models
             return null;
         }
 
-        public List<Produto> ListarProdutosPorCategoria(string categoria)
+
+        public List<ProdutoModel> ListarProdutosPorCategoria(string categoria)
         {
-            List<Produto> produtosPorCategoria = new List<Produto>();
-            foreach (Produto produto in _produtos)
+            List<ProdutoModel> produtosPorCategoria = new List<ProdutoModel>();
+            foreach (ProdutoModel produto in _produtos)
             {
-                if (Enum.TryParse(categoria, out CategoriaProduto categoriaProduto) && produto.Categoria == categoriaProduto)
-                {
+               // if (Enum.TryParse(categoria, out CategoriaProduto categoriaProduto) && produto.Categoria == categoriaProduto)
+              //  {
                     produtosPorCategoria.Add(produto);
-                }
+               // }
 
 
 
@@ -110,7 +139,11 @@ namespace gamificacao.Models
         }
 
 
-
+        public IReadOnlyCollection<ProdutoModel> ProdutosEstoque()
+        {
+            return _produtos.AsReadOnly();
+            //return new List<ProdutoModel>(_produtos);
+        }
     }
 }
 

@@ -9,10 +9,10 @@ namespace gamificacao.Models
 {
     public class CarrinhoDeCompras
     {
-        public List<Produto> Produtos { get; set; } = new List<Produto>();
+        public List<ProdutoModel> Produtos { get; set; } = new List<ProdutoModel>();
         public List<Promocao> Promocoes { get; set; } = new List<Promocao>();
 
-        public void AdicionarProduto(Produto produto)
+        public void AdicionarProduto(ProdutoModel produto)
         {
             Produtos.Add(produto);
         }
@@ -52,17 +52,15 @@ namespace gamificacao.Models
 
             return valorTotal;
         }
-        public void AplicarPromocao(Promocao promocao)
+        public void AdicionarPromocao(Promocao promocao, int code)
         {
-            Console.WriteLine("contador = ");
-            foreach (var produto in Produtos)
-            {
 
-                Console.WriteLine("entrou");
-                if (promocao.Produtos.Contains(produto))
+            foreach (var produtos in Produtos)
+            {
+                if (produtos.Categoria == (CategoriaEnum)code)
                 {
-                    Console.WriteLine("val desc="+promocao.ValorDesconto);
-                    produto.Desconto = promocao.ValorDesconto;
+                    // produto.Desconto = promocao.ValorDesconto;
+                    produtos.DefinirDesconto(promocao.ValorDesconto);
                 }
             }
         }

@@ -8,14 +8,14 @@ namespace gamificacao.Enums
 {
     public enum CorRoupa
     {
-        Preto,
-        Branco,
-        Vermelho,
-        Azul,
-        Verde,
         Amarelo,
+        Azul,
+        Branco,
+        Marrom,
+        Preto,
         Rosa,
         Roxo,
-        Marrom
+        Vermelho,
+        Verde
     }
 }

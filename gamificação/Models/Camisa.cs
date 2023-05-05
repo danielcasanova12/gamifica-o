@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace gamificacao.Models
 {
-    public class Calca : ProdutoModel
+    public class Camisa : ProdutoModel
     {
         public TamanhoRoupa Tamanho { get; set; }
         public CorRoupa Cor { get; set; }
 
-        public Calca(TamanhoRoupa tamanho, CorRoupa cor, long produtoID, string codigo, string nome, decimal preco,
-            decimal desconto, CategoriaEnum categoria) : base(produtoID, codigo, nome, preco, desconto,categoria)
+        public Camisa(TamanhoRoupa tamanho, CorRoupa cor, long produtoID, string codigo, string nome, decimal preco,
+            decimal desconto, CategoriaEnum categoria) : base(produtoID, codigo, nome, preco, desconto, categoria)
         {
             Tamanho = tamanho;
             Cor = cor;

@@ -7,32 +7,48 @@ using gamificacao.Enums;
 
 namespace gamificacao.Models
 {
-    public abstract class Acessorio : Produto
+    public abstract class Acessorio : ProdutoModel
     {
-        public TamanhoAcessorio Tamanho { get; set; }
+        
         public CorAcessorio Cor { get; set; }
-        public override decimal CalcularDesconto(Promocao promocao)
+
+        public Acessorio(CorAcessorio corAcessorio,
+            long produtoID, string codigo, string nome, decimal preco,
+            decimal desconto, CategoriaEnum categoria) : base(produtoID, codigo, nome, preco, desconto, categoria)
+        {
+            
+            Cor = corAcessorio;
+        }
+
+        public override decimal CalcularValorDoDesconto(Promocao? promocao)
         {
             decimal desconto = 0;
-            if (promocao != null)
+
+            if (promocao == null)
             {
-                if (promocao.TipoDesconto == TipoDesconto.Porcentagem)
-                {
-                    // desconto de porcentagem específico para camisetas
-                    desconto = (promocao.ValorDesconto / 100) * Preco;
-                }
-                else if (promocao.TipoDesconto == TipoDesconto.ValorFixo)
-                {
-                    // desconto de valor fixo específico para camisetas
-                    desconto = promocao.ValorDesconto;
-                }
+                return desconto;
             }
-            return Preco - desconto;
-        
-    }
+
+
+
+            if (promocao.TipoDesconto == TipoDesconto.Porcentagem)
+            {
+                // desconto de porcentagem específico para camisetas
+                desconto = (promocao.ValorDesconto / 100) * Preco;
+            }
+            else if (promocao.TipoDesconto == TipoDesconto.ValorFixo)
+            {
+                // desconto de valor fixo específico para camisetas
+                desconto = promocao.ValorDesconto;
+            }
+
+            return desconto;
+
+        }
 
 
     }
+
 
 
 }

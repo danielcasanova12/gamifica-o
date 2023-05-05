@@ -6,7 +6,16 @@ using System.Threading.Tasks;
 
 namespace gamificacao.Enums
 {
-    internal class CorAcessorio
+    public enum CorAcessorio
     {
+        Preto,
+        Branco,
+        Vermelho,
+        Azul,
+        Verde,
+        Amarelo,
+        Rosa,
+        Roxo,
+        Marrom
     }
 }

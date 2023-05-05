@@ -7,18 +7,34 @@ using gamificacao.Enums;
 using gamificacao.Models;
 namespace gamificacao.Models
 {
-    public abstract class Produto
+    public abstract class ProdutoModel
     {
-        public int Codigo { get; set; }
-        public int Tipo { get; set; }
-        public string Nome { get; set; }
-        public decimal Preco { get; set; }
-        public decimal Desconto { get; set; }
+        public long ProdutoID { get; private set; }
+        public string Codigo { get; private set; }
+        //public int Tipo { get; set; }
+        public string Nome { get; private set; }
+        public decimal Preco { get; private set; }
+        public decimal Desconto { get; private set; }
 
-        public CategoriaProduto Categoria { get; set; }
+        public CategoriaEnum Categoria { get; private set; }
 
+        public ProdutoModel(long produtoID, string codigo, string nome, decimal preco, decimal desconto,CategoriaEnum categoria)
+        {
+            ProdutoID = produtoID;
+            Codigo = codigo;
+            Nome = nome;
+            Preco = preco;
+            Desconto = desconto;
+            Categoria = categoria;
+        }
 
-        public abstract decimal CalcularDesconto(Promocao promocao);
+        public void DefinirDesconto(decimal valorDesconto)
+        {
+            Desconto = valorDesconto;
+            
+
+        }
+        public abstract decimal CalcularValorDoDesconto(Promocao? promocao);
 
     }
 

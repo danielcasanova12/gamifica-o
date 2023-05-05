@@ -1,137 +1,19 @@
 ﻿using gamificacao.Models;
 using gamificacao.Enums;
+using gamificacao.Iniciando;
 
 var carrinho = new CarrinhoDeCompras();
 var estoque = new Estoque();
-
-
-//GerenciaEstoque gerenciaEstoque = new GerenciaEstoque();
 var pagamento = new Pagamento();
 int opcao = 0;
 int escolha;
 
 
 
+new BaseDeDados(estoque).PopularBaseDeDados();
 
-estoque.AdicionarProduto(new Bolsa()
-{
-    Codigo = 1,
-    Tipo = 1,
-    Nome = "Bolsa Feminina",
-    Preco = 9112.90m,
-    Categoria = CategoriaProduto.Acessorio,
-    Cor = CorAcessorio.Preto,
-    Tamanho = TamanhoAcessorio.G,
-    Material = "Couro",
-    NumeroCompartimentos = 4
-});
-
-estoque.AdicionarProduto(new Sapato()
-{
-    Codigo = 1,
-    Tipo = 2,
-    Nome = "Sapato Social Masculino",
-    Preco = 149.90m,
-    Categoria = CategoriaProduto.Acessorio,
-    Cor = CorAcessorio.Preto,
-    Tamanho = TamanhoAcessorio.G,
-    TamanhoSapato = TamanhoSapato.Numero42,
-    Marca = "Calvin Klein"
-});
-
-estoque.AdicionarProduto(new Calca()
-{
-    Codigo = 1,
-    Tipo = 3,
-    Nome = "Calça Jeans unisex",
-    Preco = 89.90m,
-    Categoria = CategoriaProduto.Calca,
-    Tamanho = TamanhoCalca.M,
-    Cor = CorRoupa.Azul
-});
-estoque.AdicionarProduto(new Calca()
-{
-    Codigo = 2,
-    Tipo = 3,
-    Nome = "Calça Tactel unisex",
-    Preco = 89.90m,
-    Categoria = CategoriaProduto.Calca,
-    Tamanho = TamanhoCalca.M,
-    Cor = CorRoupa.Azul
-});
-estoque.AdicionarProduto(new Calca()
-{
-    Codigo = 3,
-    Tipo = 3,
-    Nome = "Calça Leg Feminina",
-    Preco = 89.90m,
-    Categoria = CategoriaProduto.Calca,
-    Tamanho = TamanhoCalca.M,
-    Cor = CorRoupa.Azul
-});
-estoque.AdicionarProduto(new Calca()
-{
-    Codigo = 4,
-    Tipo = 3,
-    Nome = "Calça Jeans Masculina",
-    Preco = 89.90m,
-    Categoria = CategoriaProduto.Calca,
-    Tamanho = TamanhoCalca.M,
-    Cor = CorRoupa.Azul
-});
-estoque.AdicionarProduto(new Calca()
-{
-    Codigo = 1,
-    Tipo = 4,
-    Nome = "Camisa peruana",
-    Preco = 89.90m,
-    Categoria = CategoriaProduto.Calca,
-    Tamanho = TamanhoCalca.M,
-    Cor = CorRoupa.Azul
-});
-estoque.AdicionarProduto(new Calca()
-{
-    Codigo = 2,
-    Tipo = 4,
-    Nome = "Camisa lala",
-    Preco = 89.90m,
-    Categoria = CategoriaProduto.Calca,
-    Tamanho = TamanhoCalca.M,
-    Cor = CorRoupa.Azul
-});
-estoque.AdicionarProduto(new Calca()
-{
-    Codigo = 3,
-    Tipo = 4,
-    Nome = "Camisa polo",
-    Preco = 89.90m,
-    Categoria = CategoriaProduto.Calca,
-    Tamanho = TamanhoCalca.M,
-    Cor = CorRoupa.Azul
-});
-
-
-Promocao promocaoCalcas = new Promocao();
-promocaoCalcas.ValorDesconto = 50;
-promocaoCalcas.TipoDesconto = TipoDesconto.Porcentagem;
-List<Produto> calcas = estoque.ListarProdutos(3);
-promocaoCalcas.Produtos = calcas;
-
-estoque.AdicionarPromocao(promocaoCalcas);
-
-Promocao promocaoAcessorios = new Promocao();
-promocaoAcessorios.ValorDesconto = 20;
-promocaoAcessorios.TipoDesconto = TipoDesconto.Porcentagem;
-List<Produto> produtosAcessorios2 = estoque.ListarProdutosPorCategoria("Acessorio");
-
-promocaoAcessorios.Produtos = produtosAcessorios2;
-estoque.AdicionarPromocao(promocaoAcessorios);
-
-
-
-
-
-
+Promocao promocaoCalcados = new Promocao(TipoDesconto.Porcentagem, 20);
+estoque.AdicionarPromocao(promocaoCalcados, 0);
 
 
 void addcarrinho(int tipo)
@@ -139,7 +21,7 @@ void addcarrinho(int tipo)
     while (true)
     {
 
-        List<Produto> filtrados = estoque.ListarProdutos(tipo);
+        List<ProdutoModel> filtrados = estoque.ListarProdutos(tipo);
         foreach (var pro in filtrados)
         {
             decimal valorTotalItem = pro.Preco - pro.Desconto;
@@ -183,34 +65,30 @@ do
     switch (escolha)
     {
         case 1:
-            while (opcao != 5)
+            while (opcao != 4)
             {
                 Console.WriteLine("O que você deseja adicionar ao carrinho?");
-                Console.WriteLine("1 - Bolsa");
-                Console.WriteLine("2 - Sapato");
-                Console.WriteLine("3 - Calça");
-                Console.WriteLine("4 - Camisetas");
-                Console.WriteLine("5 - Finalizar compra");
+                Console.WriteLine("1 - Acesorios");
+                Console.WriteLine("2 - Calça");
+                Console.WriteLine("3 - Camisetas");
+                Console.WriteLine("4 - Finalizar compra");
 
                 opcao = int.Parse(Console.ReadLine());
 
                 switch (opcao)
                 {
                     case 1:
-                        addcarrinho(1);
+                        addcarrinho(0);
                         break;
+
                     case 2:
-                        addcarrinho(2);
+                        addcarrinho(20);
+
                         break;
-
                     case 3:
-                        addcarrinho(3);
-
+                        addcarrinho(10);
                         break;
                     case 4:
-                        addcarrinho(4);
-                        break;
-                    case 5:
                         break;
 
                     default:
@@ -225,8 +103,7 @@ do
             carrinho.ListarProdutos();
             break;
         case 3:
-            carrinho.AplicarPromocao(promocaoAcessorios);
-            carrinho.AplicarPromocao(promocaoCalcas);
+            carrinho.AdicionarPromocao(promocaoCalcados,0);
             pagamento.RealizarPagamento(carrinho);
             Console.WriteLine("Compra realizada com suseso!");
             Console.WriteLine("Obrigado por utilizar o nosso sistema!");

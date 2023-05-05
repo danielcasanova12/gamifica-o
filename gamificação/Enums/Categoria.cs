@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace gamificacao.Enums
 {
-    public enum TamanhoCalca
-    {
-        P,
-        M,
-        G,
-        GG
-    }
-
+   public enum CategoriaEnum
+   {
+       Acessorio = 0,
+       Camiseta = 10,
+       Calca = 20,
+   }
+    
 }

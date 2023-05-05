@@ -9,13 +9,41 @@ namespace gamificacao.Models
 {
     public class Promocao
     {
-        public decimal ValorDesconto { get; set; }
-        public TipoDesconto TipoDesconto { get; set; }
-        public List<Produto> Produtos { get; set; } = new List<Produto>();
+        /// <summary>
+        /// Propriedades Públicas
+        /// </summary>
+        public decimal ValorDesconto { get; private set; }
+        public TipoDesconto TipoDesconto { get; private set; }
 
-        public decimal CalcularDesconto(Produto produto)
+        /// Campos privados
+        private List<ProdutoModel> _produtos = new List<ProdutoModel>();
+
+
+        /// Construtores
+        public Promocao(TipoDesconto tipoDesconto, decimal valorDesconto)
         {
-            if (!Produtos.Contains(produto))
+            TipoDesconto = tipoDesconto;
+            ValorDesconto = valorDesconto;
+        }
+
+
+        ///  Serviços
+        public void RegistrarProduto(ProdutoModel produto)
+        {
+            _produtos.Add(produto);
+        }
+
+
+        public IReadOnlyCollection<ProdutoModel> Produtos()
+        {
+            return _produtos.AsReadOnly();
+            //return new List<ProdutoModel>(_produtos);
+        }
+
+
+        public decimal CalcularDesconto(ProdutoModel produto)
+        {
+            if (!_produtos.Contains(produto))
             {
                 return 0;
             }
