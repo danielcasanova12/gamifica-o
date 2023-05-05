@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using gamificação.Models.Enums;
+using gamificacao.Enums;
 
-namespace gamificação.Models
+namespace gamificacao.Models
 {
     public class Sapato : Acessorio
     {

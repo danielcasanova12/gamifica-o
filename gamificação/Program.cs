@@ -1,6 +1,6 @@
-﻿using gamificação.Models.Enums;
-using gamificação.Models;
-;
+﻿using gamificacao.Models;
+using gamificacao.Enums;
+
 var carrinho = new CarrinhoDeCompras();
 var estoque = new Estoque();
 

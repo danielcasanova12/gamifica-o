@@ -1,9 +1,9 @@
-﻿using gamificação.Models.Enums;
+﻿using gamificacao.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace gamificação.Models
+namespace gamificacao.Models
 {
     public class Estoque
     {
