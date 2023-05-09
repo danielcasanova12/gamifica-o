@@ -16,7 +16,7 @@ Promocao promocaoCalcados = new Promocao(TipoDesconto.Porcentagem, 20);
 estoque.AdicionarPromocao(promocaoCalcados, 0);
 
 
-void addCarrinho(int tipo)
+static void AdicionarProdutoAoCarrinho(Estoque estoque, CarrinhoDeCompras carrinho, int tipo)
 {
     while (true)
     {
@@ -78,15 +78,18 @@ do
                 switch (opcao)
                 {
                     case 1:
-                        addCarrinho(0);
+                        //addCarrinho(0);
+                        AdicionarProdutoAoCarrinho(estoque, carrinho,0);
                         break;
 
                     case 2:
-                        addCarrinho(20);
+                        //addCarrinho(20);
+                        AdicionarProdutoAoCarrinho(estoque, carrinho, 20);
 
                         break;
                     case 3:
-                        addCarrinho(10);
+                        //addCarrinho(10);
+                        AdicionarProdutoAoCarrinho(estoque, carrinho, 10);
                         break;
                     case 4:
                         break;
