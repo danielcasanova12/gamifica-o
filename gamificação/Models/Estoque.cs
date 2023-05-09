@@ -1,18 +1,18 @@
-﻿using gamificacao.Enums;
+﻿using Gamificacao.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace gamificacao.Models
+namespace Gamificacao.Models
 {
     public class Estoque
     {
         private List<ProdutoModel> _produtos;
-        private List<Promocao> promocoes;
+        private List<Promocao> _promocoes;
         public Estoque()
         {
             _produtos = new List<ProdutoModel>();
-            promocoes = new List<Promocao>();
+            _promocoes = new List<Promocao>();
         }
 
         public void AdicionarPromocao(Promocao promocao,int code)
@@ -68,7 +68,7 @@ namespace gamificacao.Models
         public void AplicarPromocao( CategoriaEnum categoria)
         {
             var produtosFiltrados = _produtos.Where(p => p.Categoria == categoria);
-            var promocao = promocoes.FirstOrDefault(pr => pr.Produtos().Intersect(produtosFiltrados).Any());
+            var promocao = _promocoes.FirstOrDefault(pr => pr.Produtos().Intersect(produtosFiltrados).Any());
 
             if (promocao != null)
             {
@@ -96,7 +96,7 @@ namespace gamificacao.Models
             var produto = produtosFiltrados.FirstOrDefault(p => p.ProdutoID == codigo);
             if (produto != null)
             {
-                Promocao promocao = promocoes.FirstOrDefault(pr => pr.Produtos().Contains(produto));
+                Promocao promocao = _promocoes.FirstOrDefault(pr => pr.Produtos().Contains(produto));
                 if (promocao != null)
                 {
                     decimal desconto = 0;

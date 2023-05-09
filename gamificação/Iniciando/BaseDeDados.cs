@@ -1,12 +1,12 @@
-﻿using gamificacao.Models;
-using gamificacao.Enums;
+﻿using Gamificacao.Models;
+using Gamificacao.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace gamificacao.Iniciando
+namespace Gamificacao.Iniciando
 {
     public class BaseDeDados
     {

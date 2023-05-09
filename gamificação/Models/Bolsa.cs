@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using gamificacao.Models;
-using gamificacao.Enums;
-namespace gamificacao.Models
+using Gamificacao.Models;
+using Gamificacao.Enums;
+namespace Gamificacao.Models
 {
     public class Bolsa : Acessorio
     {

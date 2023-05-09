@@ -1,6 +1,6 @@
-﻿using gamificacao.Models;
-using gamificacao.Enums;
-using gamificacao.Iniciando;
+﻿using Gamificacao.Enums;
+using Gamificacao.Iniciando;
+using Gamificacao.Models;
 
 var carrinho = new CarrinhoDeCompras();
 var estoque = new Estoque();
@@ -16,7 +16,7 @@ Promocao promocaoCalcados = new Promocao(TipoDesconto.Porcentagem, 20);
 estoque.AdicionarPromocao(promocaoCalcados, 0);
 
 
-void addcarrinho(int tipo)
+void addCarrinho(int tipo)
 {
     while (true)
     {
@@ -78,15 +78,15 @@ do
                 switch (opcao)
                 {
                     case 1:
-                        addcarrinho(0);
+                        addCarrinho(0);
                         break;
 
                     case 2:
-                        addcarrinho(20);
+                        addCarrinho(20);
 
                         break;
                     case 3:
-                        addcarrinho(10);
+                        addCarrinho(10);
                         break;
                     case 4:
                         break;

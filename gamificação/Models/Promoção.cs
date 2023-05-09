@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using gamificacao.Enums;
+using Gamificacao.Enums;
 
-namespace gamificacao.Models
+namespace Gamificacao.Models
 {
     public class Promocao
     {
