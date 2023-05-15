@@ -1,4 +1,5 @@
-﻿using Gamificacao.Enums;
+﻿using gamificacao.UI;
+using Gamificacao.Enums;
 using Gamificacao.Iniciando;
 using Gamificacao.Models;
 
@@ -8,7 +9,7 @@ var pagamento = new Pagamento();
 int opcao = 0;
 int escolha;
 
-
+var carrinhos = new CarrinhoUI();
 
 new BaseDeDados(estoque).PopularBaseDeDados();
 
@@ -16,42 +17,7 @@ Promocao promocaoCalcados = new Promocao(TipoDesconto.Porcentagem, 20);
 estoque.AdicionarPromocao(promocaoCalcados, 0);
 
 
-static void AdicionarProdutoAoCarrinho(Estoque estoque, CarrinhoDeCompras carrinho, int tipo)
-{
-    while (true)
-    {
 
-        List<ProdutoModel> filtrados = estoque.ListarProdutos(tipo);
-        foreach (var pro in filtrados)
-        {
-            decimal valorTotalItem = pro.Preco - pro.Desconto;
-            Console.WriteLine($"{pro.Codigo} - {pro.Nome} ({pro.Preco:C2} - {pro.Desconto:C2} = {valorTotalItem:C2})");
-        }
-
-        estoque.ListarProdutos(tipo);
-
-
-        Console.WriteLine("Digite o código do produto que deseja adicionar ao carrinho (ou 0 para sair):");
-        int codigo = int.Parse(Console.ReadLine());
-
-        if (codigo == 0)
-        {
-            break;
-        }
-
-        var produto = estoque.AdicionarProdutoNoCarrinho(codigo, tipo);
-        if (produto != null)
-        {
-            carrinho.AdicionarProduto(produto);
-        }
-        else
-        {
-            Console.WriteLine("Produto não encontrado no estoque.");
-        }
-
-    }
-
-}
 
 do
 {
@@ -79,17 +45,17 @@ do
                 {
                     case 1:
                         //addCarrinho(0);
-                        AdicionarProdutoAoCarrinho(estoque, carrinho,0);
+                        carrinhos.AdicionarProdutoAoCarrinho(estoque, carrinho,0);
                         break;
 
                     case 2:
                         //addCarrinho(20);
-                        AdicionarProdutoAoCarrinho(estoque, carrinho, 20);
+                        carrinhos.AdicionarProdutoAoCarrinho(estoque, carrinho, 20);
 
                         break;
                     case 3:
                         //addCarrinho(10);
-                        AdicionarProdutoAoCarrinho(estoque, carrinho, 10);
+                        carrinhos.AdicionarProdutoAoCarrinho(estoque, carrinho, 10);
                         break;
                     case 4:
                         break;
