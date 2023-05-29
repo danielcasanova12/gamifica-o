@@ -6,8 +6,7 @@ using Gamificacao.Models;
 var carrinho = new CarrinhoDeCompras();
 var estoque = new Estoque();
 var pagamento = new Pagamento();
-int opcao = 0;
-int escolha;
+
 
 var carrinhos = new CarrinhoUI();
 
@@ -18,6 +17,8 @@ estoque.AdicionarPromocao(promocaoCalcados, 0);
 
 
 
+int escolha = 0;
+int opcao = 0;
 
 do
 {
@@ -26,7 +27,13 @@ do
     Console.WriteLine("2 - Ver produtos no carrinho");
     Console.WriteLine("3 - Pagar");
     Console.WriteLine("4 - Sair");
-    escolha = int.Parse(Console.ReadLine());
+    string escolhaInput = Console.ReadLine();
+
+    if (!int.TryParse(escolhaInput, out escolha))
+    {
+        Console.WriteLine("Opção inválida. Digite novamente.");
+        continue;
+    }
 
     switch (escolha)
     {
@@ -34,47 +41,44 @@ do
             while (opcao != 4)
             {
                 Console.WriteLine("O que você deseja adicionar ao carrinho?");
-                Console.WriteLine("1 - Acesorios");
+                Console.WriteLine("1 - Acessórios");
                 Console.WriteLine("2 - Calça");
                 Console.WriteLine("3 - Camisetas");
                 Console.WriteLine("4 - Finalizar compra");
 
-                opcao = int.Parse(Console.ReadLine());
+                string opcaoInput = Console.ReadLine();
+                if (!int.TryParse(opcaoInput, out opcao))
+                {
+                    Console.WriteLine("Opção inválida. Digite novamente.");
+                    continue;
+                }
 
                 switch (opcao)
                 {
                     case 1:
-                        //addCarrinho(0);
-                        carrinhos.AdicionarProdutoAoCarrinho(estoque, carrinho,0);
+                        carrinhos.AdicionarProdutoAoCarrinho(estoque, carrinho, 0);
                         break;
-
                     case 2:
-                        //addCarrinho(20);
                         carrinhos.AdicionarProdutoAoCarrinho(estoque, carrinho, 20);
-
                         break;
                     case 3:
-                        //addCarrinho(10);
                         carrinhos.AdicionarProdutoAoCarrinho(estoque, carrinho, 10);
                         break;
                     case 4:
                         break;
-
                     default:
-                        Console.WriteLine("Opção inválida.");
+                        Console.WriteLine("Opção inválida. Digite novamente.");
                         break;
                 }
-
-
             }
             break;
         case 2:
             carrinho.ListarProdutos();
             break;
         case 3:
-            carrinho.AdicionarPromocao(promocaoCalcados,0);
+            carrinho.AdicionarPromocao(promocaoCalcados, 0);
             pagamento.RealizarPagamento(carrinho);
-            Console.WriteLine("Compra realizada com suseso!");
+            Console.WriteLine("Compra realizada com sucesso!");
             Console.WriteLine("Obrigado por utilizar o nosso sistema!");
             escolha = 4;
             break;
@@ -82,8 +86,9 @@ do
             Console.WriteLine("Obrigado por utilizar o nosso sistema!");
             break;
         default:
-            Console.WriteLine("Opção inválida. Tente novamente.");
+            Console.WriteLine("Opção inválida. Digite novamente.");
             break;
     }
 } while (escolha != 4);
+
 

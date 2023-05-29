@@ -11,25 +11,31 @@ namespace gamificacao.UI
     {
 
 
-        public void AdicionarProdutoAoCarrinho(Estoque estoque,CarrinhoDeCompras carrinho,int tipo)
+        public void AdicionarProdutoAoCarrinho(Estoque estoque, CarrinhoDeCompras carrinho, int tipo)
         {
             while (true)
             {
-
-                 //List<Produto> filtrados = estoque.ListarProdutos(tipo);
                 List<ProdutoModel> filtrados = estoque.ListarProdutos(tipo);
                 foreach (var pro in filtrados)
                 {
                     decimal valorTotalItem = pro.Preco - pro.Desconto;
                     Console.WriteLine($"{pro.Codigo} - {pro.Nome} ({pro.Preco:C2} - {pro.Desconto:C2} = {valorTotalItem:C2})");
                 }
-                estoque.ListarProdutos(tipo);
+
                 Console.WriteLine("Digite o código do produto que deseja adicionar ao carrinho (ou 0 para sair):");
-                int codigo = int.Parse(Console.ReadLine());
+                string codigoInput = Console.ReadLine();
+
+                if (!int.TryParse(codigoInput, out int codigo))
+                {
+                    Console.WriteLine("Código inválido. Digite novamente.");
+                    continue;
+                }
+
                 if (codigo == 0)
                 {
                     break;
                 }
+
                 var produto = estoque.AdicionarProdutoNoCarrinho(codigo, tipo);
                 if (produto != null)
                 {
@@ -41,5 +47,6 @@ namespace gamificacao.UI
                 }
             }
         }
+
     }
 }
